@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
-import {  toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
-
 import s from './containerApp.module.css';
 
 class App extends Component {
@@ -14,19 +11,7 @@ class App extends Component {
     filter: '',
   };
 
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
+  
   handleFilterChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
@@ -49,19 +34,13 @@ class App extends Component {
       );
 
       if (isContact) {
-        toast.warn(`${name} is already in contact`, {
-          theme: 'colored',
-          autoClose: 4000,
-          pauseOnHover: true,
-          closeOnClick: true,
-        });
-
+        alert(`${name} is already in contact`);
         return contacts;
       } else {
         return {
           contacts: [
             {
-              id: nanoid(5),
+              id: nanoid(),
               name,
               number,
             },
